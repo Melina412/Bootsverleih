@@ -1,0 +1,150 @@
+// * font ***********************************************************
+
+@font-face {
+  font-family: RobotoLight;
+  src: url('/font/Roboto/Roboto-Light.ttf');
+}
+@font-face {
+  font-family: RobotoMedium;
+  src: url('/font/Roboto/Roboto-Medium.ttf');
+}
+@font-face {
+  font-family: RobotoBold;
+  src: url('/font/Roboto/Roboto-Bold.ttf');
+}
+@font-face {
+  font-family: RobotoBlack;
+  src: url('/font/Roboto/Roboto-Black.ttf');
+}
+
+$Roboto300: RobotoLight, system-ui, Helvetica, Arial, sans-serif;
+$Roboto500: RobotoMedium, system-ui, Helvetica, Arial, sans-serif;
+$Roboto700: RobotoBold, system-ui, Helvetica, Arial, sans-serif;
+$Roboto900: RobotoBlack, system-ui, Helvetica, Arial, sans-serif;
+
+// * text & color ***************************************************
+
+$purple: #cdb4db;
+$rose: #ffc8dd;
+$pink: #ffafcc;
+$sky: #bde0fe;
+$blue: #a2d2ff;
+
+// * general style ***************************************************
+
+:root {
+  // background-color: $sky;
+  background-color: rgb(67, 67, 171);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+//# wieder löschen dann !
+body {
+  margin: 10rem;
+}
+
+// * mixins ***************************************************
+
+@mixin text-style($ff, $fz, $c) {
+  font-family: $ff;
+  font-size: $fz;
+  color: $c;
+}
+
+@mixin size($w, $h) {
+  width: $w;
+  height: $h;
+}
+
+// * element style ************************************
+
+h1 {
+  font-size: 5rem;
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+h3 {
+  font-size: 2.8rem;
+}
+
+p {
+  font-size: 2.4rem;
+}
+
+div.app-flex {
+  display: flex;
+  gap: 5rem;
+}
+
+main {
+  &.dash {
+    section {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+
+      article {
+        border: 1px solid black;
+      }
+    }
+  }
+}
+
+nav {
+  height: 50rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 1px solid black;
+
+  img {
+    width: 3rem;
+  }
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+
+p.boot-item,
+p.res-item {
+  padding: 0.5rem 2rem;
+}
+div.even-boat {
+  background-color: $sky;
+}
+div.odd-boat {
+  background-color: $blue;
+}
+div.even-res {
+  background-color: $rose;
+}
+div.odd-res {
+  background-color: $pink;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+label {
+  font-size: 2rem;
+}
+
+button {
+  margin: 2rem 0;
+}
