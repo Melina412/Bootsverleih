@@ -44,37 +44,40 @@ export async function getReservations(req, res) {
   res.end();
 }
 
-//$ ----- findReservation -----------------------------------------------------
+//$ ----- populateReservation -----------------------------------------------------
 //! anzeigen der Details -> populiert eine bestimmte Reservierung
+//# suche anhand der Boot id
 
-export async function findReservation(req, res) {
+export async function populateReservation(req, res) {
   console.log('req body:', req.body);
 
-  const query = { boot: req.body.boot };
   // hier muss ich nach der id von dem boot suchen und die ist im object unter 'boot' und nicht '_id'
+  const query = { boot: req.body.boot };
   console.log({ query });
 
+  // der schritt ist nur um zu sehen ob die query richtig ist
   const findBoat = await Reservation.findOne(query);
   console.log({ findBoat });
+
   try {
     const populatedReservation = await Reservation.findOne(query)
       .populate('boot')
       .exec();
     res.json(populatedReservation);
     console.log('pop. reservation:', populatedReservation);
+    //
   } catch (error) {
     console.log('Reservierung nicht gefunden', error);
     res.status(500).end();
   }
   res.end();
 }
-//
-//
 
 //$ ----- findBoatsWithReservations -----------------------------------------------------
 //! Boote für die eine Reservierung existiert
 
-async function findBoatsWithReservations() {
+//xxx hierfür brauche ich keine route!
+export async function findBoatsWithReservations() {
   try {
     const boatsWithReservations = await Boat.aggregate([
       {
@@ -102,14 +105,14 @@ async function findBoatsWithReservations() {
     console.error('Fehler beim Abfragen der Boote mit Reservierungen:', error);
   }
 }
-findBoatsWithReservations();
+// findBoatsWithReservations();
 //
 //
 
 //$ ----- findBoatsWithoutReservations -----------------------------------------------------
 //! Boote die frei verfügbar sind
 
-async function findBoatsWithoutReservations() {
+export async function findBoatsWithoutReservations(req, res) {
   try {
     const boatsWithoutReservations = await Boat.aggregate([
       {
@@ -129,47 +132,56 @@ async function findBoatsWithoutReservations() {
     const boatIdsWithoutReservations = boatsWithoutReservations.map(
       (boat) => boat._id
     );
-
+    res.json(boatsWithoutReservations); // <- damit schicke ich die Daten ans Frontend!
     console.log('IDs der Boote ohne Reservierung:', boatIdsWithoutReservations);
     console.log('Boote ohne Reservierung:', boatsWithoutReservations);
   } catch (error) {
     console.error('Fehler beim Abfragen der Boote ohne Reservierungen:', error);
+    res.status(500).end();
   }
+  res.end();
 }
-findBoatsWithoutReservations();
 //
 //
 
 //$ ----- populateAllReservations -----------------------------------------------------
 //! zeigt für alle Reservierungen den Zeitraum und das dazugehörige Boot an
 
-async function populateAllReservations() {
+export async function populateAllReservations(req, res) {
   try {
     const allReservations = await Reservation.find();
 
-    const populatedReservations = await Promise.all(
-      allReservations.map(async (reservation) => {
-        const populatedReservation = await Reservation.findById(reservation._id)
-          .populate({
-            path: 'boot',
-            select: '_id name', // hier nur die beiden felder
+    if (allReservations) {
+      try {
+        const populatedReservations = await Promise.all(
+          allReservations.map(async (reservation) => {
+            const populatedReservation = await Reservation.findById(
+              reservation._id
+            )
+              .populate({
+                path: 'boot',
+                select: '_id name', // hier sollen nur die beiden felder angezeigt werden
+              })
+              .exec();
+
+            return {
+              _id: populatedReservation._id,
+              startdatum: populatedReservation.startdatum,
+              enddatum: populatedReservation.enddatum,
+              boot: populatedReservation.boot,
+            };
           })
-          .exec();
-
-        return {
-          _id: populatedReservation._id,
-          startdatum: populatedReservation.startdatum,
-          enddatum: populatedReservation.enddatum,
-          boot: populatedReservation.boot,
-        };
-      })
-    );
-
-    console.log('Populierte Reservierungen:', populatedReservations);
-
-    // Hier kannst du die populierten Reservierungen für weitere Verarbeitungsschritte verwenden
+        );
+        res.json(populatedReservations);
+        console.log('Populierte Reservierungen:', populatedReservations);
+      } catch (error) {
+        console.error('Fehler beim populieren der Reservierungen:', error);
+        res.status(500).end();
+      }
+    }
   } catch (error) {
-    console.error('Fehler beim Populieren der Reservierungen:', error);
+    console.log('Fehler beim finden der Reservierungen:', error);
+    res.status(500).end();
   }
+  res.end();
 }
-populateAllReservations();

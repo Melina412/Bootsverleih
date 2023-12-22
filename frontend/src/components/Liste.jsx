@@ -23,6 +23,7 @@ function Liste({ page, boote, reservierungen, setAddMode }) {
           {reservierungen?.map((res, index) => (
             <div
               key={res._id}
+              id='even-odd'
               className={index % 2 === 0 ? 'even-res' : 'odd-res'}
             >
               <ResItem res={res} reservierungen={reservierungen} />

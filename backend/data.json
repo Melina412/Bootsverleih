@@ -1,139 +1,139 @@
 {
-    "boats": [
-      {
-        "name": "Boatzilla X3000",
-        "baujahr": 2021,
-        "seriennummer": "BZ3000SN001",
-        "material": "Metall",
-        "bootsart": "Luftkissenboot",
-        "farbe": "Silber",
-        "passagierzahl": 8
-      },
-      {
-        "name": "Knallfrosch Express",
-        "baujahr": 2010,
-        "seriennummer": "KFE2010SN002",
-        "material": "GFK",
-        "bootsart": "Tretboot",
-        "farbe": "Neon-Grün",
-        "passagierzahl": 2
-      },
-      {
-        "name": "Quacksalber Queen",
-        "baujahr": 2015,
-        "seriennummer": "QQ2015SN003",
-        "material": "Holz",
-        "bootsart": "Geisterschiff",
-        "farbe": "Durchsichtig",
-        "passagierzahl": 6
-      },
-      {
-        "name": "Blitzdonner Dampfer",
-        "baujahr": 1930,
-        "seriennummer": "BD1930SN004",
-        "material": "Metall",
-        "bootsart": "Dampfschiff",
-        "farbe": "Messing",
-        "passagierzahl": 20
-      },
-      {
-        "name": "Regenbogen Racer",
-        "baujahr": 2022,
-        "seriennummer": "RR2022SN005",
-        "material": "GFK",
-        "bootsart": "Motorboot",
-        "farbe": "Bunt",
-        "passagierzahl": 4
-      },
-      {
-        "name": "Wolkenschaf Segler",
-        "baujahr": 2018,
-        "seriennummer": "WS2018SN006",
-        "material": "Holz",
-        "bootsart": "Segelboot",
-        "farbe": "Weiß",
-        "passagierzahl": 3
-      },
-      {
-        "name": "Pappkarton Cruiser",
-        "baujahr": 2020,
-        "seriennummer": "PC2020SN007",
-        "material": "Pappe",
-        "bootsart": "Schlauchboot",
-        "farbe": "Braun",
-        "passagierzahl": 5
-      },
-      {
-        "name": "Ninja Narwal",
-        "baujahr": 2019,
-        "seriennummer": "NNUB2019SN008",
-        "material": "Metall",
-        "bootsart": "U-Boot",
-        "farbe": "Schwarz",
-        "passagierzahl": 4
-      },
-      {
-        "name": "Zauberfee Floß",
-        "baujahr": 2017,
-        "seriennummer": "ZF2017SN009",
-        "material": "Holz",
-        "bootsart": "Floß",
-        "farbe": "Rosa",
-        "passagierzahl": 8
-      },
-      {
-        "name": "Keks-Kanu",
-        "baujahr": 2023,
-        "seriennummer": "KK2023SN010",
-        "material": "GFK",
-        "bootsart": "Kanu",
-        "farbe": "Braun",
-        "passagierzahl": 2
-      },
-      {
-        "name": "Cosmic Cruise Spaceship",
-        "baujahr": 3000,
-        "seriennummer": "CCSS3000SN011",
-        "material": "Metall",
-        "bootsart": "Raumschiff",
-        "farbe": "Glitzernd",
-        "passagierzahl": 50
-      },
-      {
-        "name": "Lustiger Lachs",
-        "baujahr": 2016,
-        "seriennummer": "LLK2016SN012",
-        "material": "GFK",
-        "bootsart": "Kajak",
-        "farbe": "Orange",
-        "passagierzahl": 1
-      },
-      {
-        "name": "Flauschige Ente",
-        "baujahr": 2024,
-        "seriennummer": "FEY2024SN013",
-        "material": "Metall",
-        "bootsart": "Yacht",
-        "farbe": "Gelb",
-        "passagierzahl": 12
-      },
-      {
-        "name": "Träumerische Triton",
-        "baujahr": 2014,
-        "seriennummer": "TTT2014SN014",
-        "material": "Holz",
-        "bootsart": "Tretboot",
-        "farbe": "Türkis",
-        "passagierzahl": 2
-      },
-      {
-        "name": "Glitzer-Gondel",
-        "baujahr": 2021,
-        "seriennummer": "GG2021SN015",
-        "material": "Metall",
-        "bootsart": "Gondel",
-        "farbe": "Glänzend",
-        "passagierzahl": 4
-      }
-    ]
-  }
+  "boats": [
+    {
+      "name": "Boatzilla X3000",
+      "baujahr": 2021,
+      "seriennummer": "BZ3000SN001",
+      "material": "Metall",
+      "bootsart": "Luftkissenboot",
+      "farbe": "Silber",
+      "passagierzahl": 8
+    },
+    {
+      "name": "Knallfrosch Express",
+      "baujahr": 2010,
+      "seriennummer": "KFE2010SN002",
+      "material": "GFK",
+      "bootsart": "Tretboot",
+      "farbe": "Neon-Grün",
+      "passagierzahl": 2
+    },
+    {
+      "name": "Quacksalber Queen",
+      "baujahr": 2015,
+      "seriennummer": "QQ2015SN003",
+      "material": "Holz",
+      "bootsart": "Geisterschiff",
+      "farbe": "Durchsichtig",
+      "passagierzahl": 6
+    },
+    {
+      "name": "Blitzdonner Dampfer",
+      "baujahr": 1930,
+      "seriennummer": "BD1930SN004",
+      "material": "Metall",
+      "bootsart": "Dampfschiff",
+      "farbe": "Messing",
+      "passagierzahl": 20
+    },
+    {
+      "name": "Regenbogen Racer",
+      "baujahr": 2022,
+      "seriennummer": "RR2022SN005",
+      "material": "GFK",
+      "bootsart": "Motorboot",
+      "farbe": "Bunt",
+      "passagierzahl": 4
+    },
+    {
+      "name": "Wolkenschaf Segler",
+      "baujahr": 2018,
+      "seriennummer": "WS2018SN006",
+      "material": "Holz",
+      "bootsart": "Segelboot",
+      "farbe": "Weiß",
+      "passagierzahl": 3
+    },
+    {
+      "name": "Pappkarton Cruiser",
+      "baujahr": 2020,
+      "seriennummer": "PC2020SN007",
+      "material": "Pappe",
+      "bootsart": "Schlauchboot",
+      "farbe": "Braun",
+      "passagierzahl": 5
+    },
+    {
+      "name": "Ninja Narwal",
+      "baujahr": 2019,
+      "seriennummer": "NNUB2019SN008",
+      "material": "Metall",
+      "bootsart": "U-Boot",
+      "farbe": "Schwarz",
+      "passagierzahl": 4
+    },
+    {
+      "name": "Zauberfee Floß",
+      "baujahr": 2017,
+      "seriennummer": "ZF2017SN009",
+      "material": "Holz",
+      "bootsart": "Floß",
+      "farbe": "Rosa",
+      "passagierzahl": 8
+    },
+    {
+      "name": "Keks-Kanu",
+      "baujahr": 2023,
+      "seriennummer": "KK2023SN010",
+      "material": "Keks",
+      "bootsart": "Kanu",
+      "farbe": "Braun",
+      "passagierzahl": 2
+    },
+    {
+      "name": "Cosmic Cruise Spaceship",
+      "baujahr": 3000,
+      "seriennummer": "CCSS3000SN011",
+      "material": "Metall",
+      "bootsart": "Raumschiff",
+      "farbe": "Glitzernd",
+      "passagierzahl": 50
+    },
+    {
+      "name": "Lustiger Lachs",
+      "baujahr": 2016,
+      "seriennummer": "LLK2016SN012",
+      "material": "Styropor",
+      "bootsart": "Kajak",
+      "farbe": "Orange",
+      "passagierzahl": 1
+    },
+    {
+      "name": "Flauschige Ente",
+      "baujahr": 2024,
+      "seriennummer": "FEY2024SN013",
+      "material": "Gummi",
+      "bootsart": "Yacht",
+      "farbe": "Gelb",
+      "passagierzahl": 12
+    },
+    {
+      "name": "Träumerische Triton",
+      "baujahr": 2014,
+      "seriennummer": "TTT2014SN014",
+      "material": "Holz",
+      "bootsart": "Tretboot",
+      "farbe": "Türkis",
+      "passagierzahl": 2
+    },
+    {
+      "name": "Glitzer-Gondel",
+      "baujahr": 2021,
+      "seriennummer": "GG2021SN015",
+      "material": "Metall",
+      "bootsart": "Gondel",
+      "farbe": "Glänzend",
+      "passagierzahl": 4
+    }
+  ]
+}

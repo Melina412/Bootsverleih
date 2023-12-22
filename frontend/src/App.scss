@@ -33,7 +33,7 @@ $blue: #a2d2ff;
 // * general style ***************************************************
 
 :root {
-  // background-color: $sky;
+  // background-color: $purple;
   background-color: rgb(67, 67, 171);
 }
 
@@ -147,4 +147,12 @@ label {
 
 button {
   margin: 2rem 0;
+}
+
+div#even-odd {
+  a {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+  }
 }

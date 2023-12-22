@@ -5,7 +5,8 @@ import Dashboard from './pages/Dashboard';
 import Boote from './pages/Boote';
 import Reservierungen from './pages/Reservierungen';
 import Nav from './components/Nav';
-import Detailseite from './pages/Detailseite';
+import ResDetailseite from './pages/ResDetailseite';
+import BootDetailseite from './pages/BootDetailseite';
 
 function App() {
   const [boote, setBoote] = useState([]);
@@ -47,7 +48,12 @@ function App() {
           <Nav />
           <div>
             <Routes>
-              <Route path='/' element={<Dashboard />} />
+              <Route
+                path='/'
+                element={
+                  <Dashboard boote={boote} reservierungen={reservierungen} />
+                }
+              />
               <Route
                 path='/boote'
                 element={<Boote boote={boote} fetchBoote={fetchBoote} />}
@@ -62,10 +68,17 @@ function App() {
                 }
               />
               <Route
-                path='/details/:id'
+                path='/details/reservierungen/:id'
                 element={
-                  <Detailseite boote={boote} reservierungen={reservierungen} />
+                  <ResDetailseite
+                    reservierungen={reservierungen}
+                    boote={boote}
+                  />
                 }
+              />
+              <Route
+                path='/details/boote/:id'
+                element={<BootDetailseite boote={boote} />}
               />
             </Routes>
           </div>
