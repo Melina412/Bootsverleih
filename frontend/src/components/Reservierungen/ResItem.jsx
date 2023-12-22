@@ -23,7 +23,7 @@ function ResItem({ res }) {
       onClick={() => sessionStorage.setItem('itemType', 'res')}
     >
       {/* <div className='res-list-items'> */}
-      <p className='res-item'>Res.-Nr: {res._id.slice(-6, -1)}</p>
+      <p className='res-item'>Res.-Nr: {res._id.slice(-5)}</p>
 
       <p className='res-item'>
         Datum:

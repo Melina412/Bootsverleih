@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-function BootDetailseite({ boote, reservierungen }) {
+function BootDetailseite({
+  boote,
+  reservierungen,
+  fetchBoote,
+  fetchReservierungen,
+}) {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -10,8 +15,30 @@ function BootDetailseite({ boote, reservierungen }) {
   const boot = boote?.find((item) => item._id === id);
   console.log({ boot });
 
+  async function deleteBoot() {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKENDURL}/api/boats`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(boot),
+      });
+      if (res.ok) {
+        console.log(boot.name, 'wurde gelöscht');
+        setDeleted(true);
+        fetchBoote();
+        fetchReservierungen();
+      } else {
+        console.log('error');
+      }
+    } catch (error) {
+      console.log('Fehler beim löschen', error);
+    }
+  }
+
   const handleDeleteBoot = () => {
-    setDeleted(true);
+    deleteBoot();
     setTimeout(() => {
       navigate('/boote');
     }, 2000);
@@ -31,8 +58,8 @@ function BootDetailseite({ boote, reservierungen }) {
         </div>
       ) : (
         <div>
-          <p>{boot?.name} wurde gelöscht!!!!!</p>
-          <p>du wirst jetzt zur Übersicht der Boote weitergeleitet...</p>
+          <p>Boot wurde gelöscht!</p>
+          <p>du wirst jetzt weitergeleitet...</p>
         </div>
       )}
       <button className='del-res' onClick={handleDeleteBoot}>

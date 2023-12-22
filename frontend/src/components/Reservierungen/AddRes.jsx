@@ -16,8 +16,19 @@ function AddRes({ setAddMode, fetchReservierungen }) {
 
   console.log({ resStart });
   console.log({ selectOptions });
-  console.log({ boatsWithoutReservations });
   console.log({ populatedReservations });
+  console.log(
+    'Boote ohne Reservierung:',
+    boatsWithoutReservations.map(
+      (boat) => boat.name + ' - ' + boat._id.slice(-5)
+    )
+  );
+  console.log(
+    'populated Reservierungen:',
+    populatedReservations.map(
+      (res) => res.boot.name + ' - ' + res.boot._id.slice(-5)
+    )
+  );
   console.log({ added });
 
   //$ ---------- getSelectOptions ---------------
@@ -44,12 +55,16 @@ function AddRes({ setAddMode, fetchReservierungen }) {
         new Date(res.enddatum).getTime() < resStart
     );
     console.log({ matchedRes });
-    matchedRes.forEach((res) =>
-      optionsArray.push({
-        id: res.boot._id,
+    matchedRes.forEach((res) => {
+      const new_option = {
+        _id: res.boot._id,
         name: res.boot.name,
-      })
-    );
+      };
+      // prüfen ob das Boot nicht bereits im Array existiert (aufgrund mehrfacher Reservierungen)
+      if (!optionsArray.some((option) => option._id === new_option._id)) {
+        optionsArray.push(new_option);
+      }
+    });
     // für beide Gruppen werden jeweils der Name und die id des Bootes im Array gespeichert
     console.log({ optionsArray });
     setSelectOptions(optionsArray);
@@ -182,6 +197,7 @@ function AddRes({ setAddMode, fetchReservierungen }) {
       ) : (
         <div>
           <p>Reservierung wurde erstellt!</p>
+          <p>Du wirst zu den Reservierungen weitergeleitet...</p>
         </div>
       )}
     </>

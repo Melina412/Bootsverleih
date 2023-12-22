@@ -10,7 +10,8 @@ function BootItem({ boot }) {
       onClick={() => sessionStorage.setItem('itemType', 'boot')}
     >
       <p className='boot-item'>
-        {boot.seriennummer}, {boot.name}, {boot.bootsart}
+        <span>{boot.name}</span>, {boot.bootsart}, Seriennummer:{' '}
+        {boot.seriennummer}
       </p>
     </Link>
   );

@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import {
   addReservation,
+  deleteReservation,
   findBoatsWithoutReservations,
   populateReservation,
   getReservations,
@@ -16,3 +17,4 @@ router.get('/', getReservations);
 router.post('/details', populateReservation);
 router.post('/unreserved', findBoatsWithoutReservations);
 router.post('/allpopulated', populateAllReservations);
+router.delete('/', deleteReservation);

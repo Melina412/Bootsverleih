@@ -2,11 +2,12 @@ import BootItem from './Boote/BootItem';
 import ResItem from './Reservierungen/ResItem';
 
 function Liste({ page, boote, reservierungen, setAddMode }) {
+  // denn addMode State habe ich schon in die App verlegt
   return (
     <section className='list'>
       {page === 'boote' && (
         <article>
-          <button onClick={() => setAddMode(true)}>+ Add Boot</button>
+          <button onClick={() => setAddMode(true)}>Neues Boot anlegen</button>
           {boote?.map((boot, index) => (
             <div
               key={boot._id}
@@ -19,7 +20,9 @@ function Liste({ page, boote, reservierungen, setAddMode }) {
       )}
       {page === 'res' && (
         <article>
-          <button onClick={() => setAddMode(true)}>+ Add Reservation</button>
+          {/* <button onClick={() => setAddMode(true)}>
+            Neue Reservierung anlegen
+          </button> */}
           {reservierungen?.map((res, index) => (
             <div
               key={res._id}

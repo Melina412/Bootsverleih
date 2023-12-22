@@ -11,6 +11,7 @@ import BootDetailseite from './pages/BootDetailseite';
 function App() {
   const [boote, setBoote] = useState([]);
   const [reservierungen, setReservierungen] = useState([]);
+  const [addMode, setAddMode] = useState(false);
 
   useEffect(() => {
     fetchBoote();
@@ -40,6 +41,7 @@ function App() {
 
   console.log({ boote });
   console.log({ reservierungen });
+  console.log({ addMode });
 
   return (
     <>
@@ -64,6 +66,7 @@ function App() {
                   <Reservierungen
                     reservierungen={reservierungen}
                     fetchReservierungen={fetchReservierungen}
+                    setAddMode={setAddMode}
                   />
                 }
               />
@@ -73,12 +76,21 @@ function App() {
                   <ResDetailseite
                     reservierungen={reservierungen}
                     boote={boote}
+                    fetchReservierungen={fetchReservierungen}
+                    setAddMode={setAddMode}
+                    addMode={addMode}
                   />
                 }
               />
               <Route
                 path='/details/boote/:id'
-                element={<BootDetailseite boote={boote} />}
+                element={
+                  <BootDetailseite
+                    boote={boote}
+                    fetchBoote={fetchBoote}
+                    fetchReservierungen={fetchReservierungen}
+                  />
+                }
               />
             </Routes>
           </div>

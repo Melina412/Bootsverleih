@@ -185,3 +185,24 @@ export async function populateAllReservations(req, res) {
   }
   res.end();
 }
+
+//$ ----- deleteReservation -----------------------------------------------------
+
+export async function deleteReservation(req, res) {
+  console.log('req body:', req.body);
+  const query = { _id: req.body._id };
+  console.log({ query });
+
+  try {
+    const DeleteResult = await Reservation.deleteOne(query);
+    console.log({ DeleteResult });
+
+    if (DeleteResult.deletedCount > 0) {
+      console.log('Rservierung wurde gelöscht');
+      res.status(204).end();
+    }
+  } catch (error) {
+    console.log('Reservierung konnte nicht gelöscht werden', error);
+    res.status(500).end();
+  }
+}

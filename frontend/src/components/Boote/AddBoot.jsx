@@ -54,6 +54,7 @@ function AddBoot({ setAddMode, fetchBoote }) {
       ) : (
         <div>
           <p>Boot wurde erstellt!</p>
+          <p>Du wirst zu den Booten weitergeleitet...</p>
         </div>
       )}
     </>
