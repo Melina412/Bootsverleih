@@ -1,123 +1,37 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { ReservierungenContext } from '../../context/ReservierungenContext.jsx';
+// import getSelectOptions from '../../utils/selectOptions';
 
 function AddRes({ setAddMode, fetchReservierungen }) {
+  const {
+    selectOptions,
+
+    fetchFreeBoats,
+    fetchPopulatedReservations,
+    resStart,
+    resEnd,
+    setResStart,
+    setResEnd,
+  } = useContext(ReservierungenContext);
+
   //$ ---------- useStates ---------------
 
-  const [resStart, setResStart] = useState();
-  const [resEnd, setResEnd] = useState();
-  const [selectOptions, setSelectOptions] = useState([]);
-  const [boatsWithoutReservations, setBoatsWithoutReservations] = useState([]);
-  const [populatedReservations, setPopulatedReservations] = useState([]);
+  // const [resStart, setResStart] = useState();
+  // const [resEnd, setResEnd] = useState();
   const [added, setAdded] = useState(false);
 
   const minDate = resStart
     ? new Date(resStart).toISOString().split('T')[0]
     : null;
 
-  console.log({ resStart });
-  console.log({ selectOptions });
-  console.log({ populatedReservations });
-  console.log(
-    'Boote ohne Reservierung:',
-    boatsWithoutReservations.map(
-      (boat) => boat.name + ' - ' + boat._id.slice(-5)
-    )
-  );
-  console.log(
-    'populated Reservierungen:',
-    populatedReservations.map(
-      (res) => res.boot.name + ' - ' + res.boot._id.slice(-5)
-    )
-  );
   console.log({ added });
 
-  //$ ---------- getSelectOptions ---------------
-
-  useEffect(() => {
-    getSelectOptions();
-  }, [resStart, resEnd]);
-
-  // hier erstelle ich einen Array mit allen verfügbaren Booten im Zeitraum der gewünschten Reservierung. der setzt sich aus zwei Gruppen zusammen
-  function getSelectOptions() {
-    const optionsArray = [];
-    // 1. alle Boote für die keine Reservierung vorliegt
-    boatsWithoutReservations.forEach((boat) =>
-      optionsArray.push({
-        id: boat._id,
-        name: boat.name,
-      })
-    );
-
-    // 2. gefilterte Boote aus den populierten Reservierungen, bei denen das eingegebene Enddatum vor dem Beginn der bestehenden Reservierung liegt oder das eingegebene Startdatum nach dem Ende der bestehenden Reservierung liegt
-    const matchedRes = populatedReservations.filter(
-      (res) =>
-        new Date(res.startdatum).getTime() > resEnd ||
-        new Date(res.enddatum).getTime() < resStart
-    );
-    console.log({ matchedRes });
-    matchedRes.forEach((res) => {
-      const new_option = {
-        _id: res.boot._id,
-        name: res.boot.name,
-      };
-      // prüfen ob das Boot nicht bereits im Array existiert (aufgrund mehrfacher Reservierungen)
-      if (!optionsArray.some((option) => option._id === new_option._id)) {
-        optionsArray.push(new_option);
-      }
-    });
-    // für beide Gruppen werden jeweils der Name und die id des Bootes im Array gespeichert
-    console.log({ optionsArray });
-    setSelectOptions(optionsArray);
-  }
+  //$ ---------- useEffects ---------------
 
   useEffect(() => {
     fetchFreeBoats();
     fetchPopulatedReservations();
   }, []);
-
-  //$ ---------- fetchFreeBoats ---------------
-
-  async function fetchFreeBoats() {
-    try {
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKENDURL}/api/reservations/unreserved`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        setBoatsWithoutReservations(data);
-      }
-    } catch (error) {
-      console.log('Fehler beim fetch der freien Boote', error);
-    }
-  }
-
-  //$ ---------- fetchPopulatedReservations ---------------
-
-  async function fetchPopulatedReservations() {
-    try {
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKENDURL}/api/reservations/allpopulated`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        setPopulatedReservations(data);
-      }
-    } catch (error) {
-      console.log('Fehler beim fetch der freien Boote', error);
-    }
-  }
 
   //$ ---------- addReservation ---------------
   // Daten aus dem Formular ans Backend schicken
@@ -175,7 +89,7 @@ function AddRes({ setAddMode, fetchReservierungen }) {
                 <label htmlFor='boot'>Welches Boot</label>
                 <select name='boot'>
                   {selectOptions?.map((option, key) => (
-                    <option key={option.id} value={option.id}>
+                    <option key={option._id} value={option._id}>
                       {option.name}
                     </option>
                   ))}

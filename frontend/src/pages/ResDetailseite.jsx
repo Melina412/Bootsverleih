@@ -155,7 +155,7 @@ function ResDetailseite({
           Reservierung löschen
         </button>
       </section>
-      {addMode && <AddRes />}
+
       {editMode && <EditRes setEditMode={setEditMode} />}
     </>
   );
