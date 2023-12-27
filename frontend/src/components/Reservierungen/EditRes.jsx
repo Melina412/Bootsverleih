@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { ReservierungenContext } from '../../context/ReservierungenContext.jsx';
 
 function EditRes({ setEditMode }) {
-  const [resStart, setResStart] = useState();
-  const [resEnd, setResEnd] = useState();
+  const {
+    selectOptions,
+    fetchFreeBoats,
+    fetchPopulatedReservations,
+    resStart,
+    resEnd,
+    setResStart,
+    setResEnd,
+  } = useContext(ReservierungenContext);
 
   const minDate = resStart
     ? new Date(resStart).toISOString().split('T')[0]
@@ -37,7 +45,7 @@ function EditRes({ setEditMode }) {
             <label htmlFor='boot'>Welches Boot</label>
             <select name='boot'>
               {selectOptions?.map((option, key) => (
-                <option key={option.id} value={option.id}>
+                <option key={option._id} value={option._id}>
                   {option.name}
                 </option>
               ))}

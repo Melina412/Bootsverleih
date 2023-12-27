@@ -1,29 +1,21 @@
-import { useState } from 'react';
 import Liste from '../components/Liste';
 import AddRes from '../components/Reservierungen/AddRes';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { ReservierungenContext } from '../context/ReservierungenContext.jsx';
 
-function Reservierungen({
-  reservierungen,
-  fetchReservierungen,
-  setResStart,
-  setResEnd,
-}) {
+function Reservierungen() {
+  const { populatedReservations } = useContext(ReservierungenContext);
   const [addMode, setAddMode] = useState(false);
   return (
     <main className='reservierungen'>
       <h1>Reservierungen</h1>
       {addMode ? (
-        <AddRes
-          setAddMode={setAddMode}
-          fetchReservierungen={fetchReservierungen}
-          setResStart={setResStart}
-          setResEnd={setResEnd}
-        />
+        <AddRes setAddMode={setAddMode} />
       ) : (
         <Liste
           page='res'
-          reservierungen={reservierungen}
           setAddMode={setAddMode}
+          reservierungen={populatedReservations}
         />
       )}
     </main>

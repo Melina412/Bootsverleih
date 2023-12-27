@@ -160,7 +160,7 @@ export async function populateAllReservations(req, res) {
             )
               .populate({
                 path: 'boot',
-                select: '_id name', // hier sollen nur die beiden felder angezeigt werden
+                // select: '_id name', // hier sollen nur die beiden felder angezeigt werden
               })
               .exec();
 

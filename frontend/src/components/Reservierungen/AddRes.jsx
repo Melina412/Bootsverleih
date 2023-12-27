@@ -5,7 +5,6 @@ import { ReservierungenContext } from '../../context/ReservierungenContext.jsx';
 function AddRes({ setAddMode, fetchReservierungen }) {
   const {
     selectOptions,
-
     fetchFreeBoats,
     fetchPopulatedReservations,
     resStart,
