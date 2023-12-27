@@ -1,3 +1,5 @@
+import Login from '../components/Login';
+
 function Dashboard({ boote, reservierungen }) {
   console.log(reservierungen.length);
   return (
@@ -19,6 +21,10 @@ function Dashboard({ boote, reservierungen }) {
           <p>{boote.length}</p>
         </article>
       </section>
+
+      <div>
+        <Login />
+      </div>
     </main>
   );
 }
