@@ -1,5 +1,5 @@
 **/*.DS_Store
-notizen.md
+/project
 
 # backend
 node_modules/
