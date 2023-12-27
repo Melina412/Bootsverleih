@@ -2,6 +2,7 @@ import { Reservation } from '../reservations/model.js';
 import { Boat } from './model.js';
 
 //$ ----- addBoat -----
+//# hierfür muss sich der user jetzt authentifizieren
 
 export async function addBoat(req, res) {
   const boat = new Boat(req.body);
