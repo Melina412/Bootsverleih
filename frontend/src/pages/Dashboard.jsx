@@ -1,8 +1,7 @@
 function Dashboard({ boote, reservierungen }) {
-  console.log(reservierungen.length);
   return (
     <main className='dash'>
-      <h1>Dash</h1>
+      <h1>🛟🛥️✨Helges Bootverleih✨⛵️⚓️</h1>
       <section>
         <article>
           <h2>Reservierungen</h2>

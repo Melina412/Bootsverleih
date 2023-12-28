@@ -24,11 +24,8 @@ function ResItem({ res }) {
     >
       {/* <div className='res-list-items'> */}
       <p className='res-item'>Res.-Nr: {res._id.slice(-5)}</p>
-
-      <p className='res-item'>
-        Datum:
-        {start_date + ' - ' + end_date}
-      </p>
+      <p className='res-item'>{res.boot.name}</p>
+      <p className='res-item'>{start_date + ' - ' + end_date}</p>
       {/* </div> */}
     </Link>
   );

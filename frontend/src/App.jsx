@@ -1,17 +1,17 @@
 import './App.scss';
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ReservierungenContext } from './context/ReservierungenContext';
+import Nav from './components/Nav';
 import Dashboard from './pages/Dashboard';
 import Boote from './pages/Boote';
 import Reservierungen from './pages/Reservierungen';
-import Nav from './components/Nav';
-import ResDetailseite from './pages/ResDetailseite';
 import BootDetailseite from './pages/BootDetailseite';
+import ResDetailseite from './pages/ResDetailseite';
 
 function App() {
+  //$ fetch für alle Boote -------------------
   const [boote, setBoote] = useState([]);
-  const [reservierungen, setReservierungen] = useState([]);
-  const [addMode, setAddMode] = useState(false);
 
   useEffect(() => {
     fetchBoote();
@@ -25,26 +25,142 @@ function App() {
     }
   }
 
+  //$ states für den ReservierungenContext ----------
+
+  const [boatsWithoutReservations, setBoatsWithoutReservations] = useState([]);
+  const [populatedReservations, setPopulatedReservations] = useState([]);
+  const [selectOptions, setSelectOptions] = useState([]);
+  const [resStart, setResStart] = useState();
+  const [resEnd, setResEnd] = useState();
+
+  //$  Logik für die Erstellung eines Arrays aller verfügbaren Boote im Zeitraum einer gewünschten Reservierung
+
   useEffect(() => {
-    fetchReservierungen();
+    getSelectOptions();
+  }, [resStart, resEnd]);
+
+  // der Array setzt sich aus zwei Gruppen zusammen:
+
+  function getSelectOptions() {
+    const optionsArray = [];
+
+    // 1. alle Boote für die keine Reservierung vorliegt
+    boatsWithoutReservations.forEach((boat) =>
+      optionsArray.push({
+        _id: boat._id,
+        name: boat.name,
+      })
+    );
+
+    // 2. gefilterte Boote aus den Reservierungen, bei denen sich der ausgewählte Zeitraum nicht mit einer bestehenden Reservierung überschneidet
+    const matchedRes = populatedReservations.filter(
+      (res) =>
+        new Date(res.startdatum).getTime() > resEnd ||
+        new Date(res.enddatum).getTime() < resStart
+    );
+    console.log({ matchedRes });
+    matchedRes.forEach((res) => {
+      const new_option = {
+        _id: res.boot._id,
+        name: res.boot.name,
+      };
+      // prüfen ob das Boot nicht bereits im Array existiert (aufgrund mehrfacher Reservierungen)
+      if (!optionsArray.some((option) => option._id === new_option._id)) {
+        optionsArray.push(new_option);
+      }
+    });
+    // für beide Gruppen werden jeweils der Name und die id des Bootes im Array gespeichert
+    console.log({ optionsArray });
+    setSelectOptions(optionsArray);
+  }
+
+  useEffect(() => {
+    fetchFreeBoats();
+    fetchPopulatedReservations();
   }, []);
 
-  async function fetchReservierungen() {
-    const res = await fetch(
-      `${import.meta.env.VITE_BACKENDURL}/api/reservations`
-    );
-    if (res.ok) {
-      const data = await res.json();
-      setReservierungen(data);
+  //$ fetch aller Boote für die keine Reservierung vorliegt
+
+  async function fetchFreeBoats() {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKENDURL}/api/reservations/unreserved`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        setBoatsWithoutReservations(data);
+      }
+    } catch (error) {
+      console.log('Fehler beim fetch der freien Boote', error);
     }
   }
 
+  //$ ---------- fetchPopulatedReservations ---------------
+
+  async function fetchPopulatedReservations() {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKENDURL}/api/reservations/allpopulated`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      if (res.ok) {
+        const data = await res.json();
+        setPopulatedReservations(data);
+      }
+    } catch (error) {
+      console.log('Fehler beim fetch der freien Boote', error);
+    }
+  }
+
+  //$ console logs ------------------------
+
   console.log({ boote });
-  console.log({ reservierungen });
-  console.log({ addMode });
+  console.log(
+    'Boote ohne Reservierung:',
+    boatsWithoutReservations.map(
+      (boat) => boat.name + ' - ' + boat._id.slice(-5)
+    )
+  );
+  console.log(
+    'populated Reservierungen:',
+    populatedReservations.map(
+      (res) => res.boot.name + ' - ' + res.boot._id.slice(-5)
+    )
+  );
+  console.log({ resStart });
+  console.log({ resEnd });
+  console.log({ selectOptions });
+
+  //$ -------------------------------------
 
   return (
-    <>
+    <ReservierungenContext.Provider
+      value={{
+        boatsWithoutReservations,
+        setBoatsWithoutReservations,
+        populatedReservations,
+        setPopulatedReservations,
+        selectOptions,
+        setSelectOptions,
+        fetchFreeBoats,
+        fetchPopulatedReservations,
+        resStart,
+        setResStart,
+        resEnd,
+        setResEnd,
+      }}
+    >
       <BrowserRouter>
         <div className='app-flex'>
           <Nav />
@@ -53,7 +169,10 @@ function App() {
               <Route
                 path='/'
                 element={
-                  <Dashboard boote={boote} reservierungen={reservierungen} />
+                  <Dashboard
+                    boote={boote}
+                    reservierungen={populatedReservations}
+                  />
                 }
               />
               <Route
@@ -64,9 +183,7 @@ function App() {
                 path='/reservierungen'
                 element={
                   <Reservierungen
-                    reservierungen={reservierungen}
-                    fetchReservierungen={fetchReservierungen}
-                    setAddMode={setAddMode}
+                    fetchReservierungen={fetchPopulatedReservations}
                   />
                 }
               />
@@ -74,11 +191,8 @@ function App() {
                 path='/details/reservierungen/:id'
                 element={
                   <ResDetailseite
-                    reservierungen={reservierungen}
                     boote={boote}
-                    fetchReservierungen={fetchReservierungen}
-                    setAddMode={setAddMode}
-                    addMode={addMode}
+                    fetchReservierungen={fetchPopulatedReservations}
                   />
                 }
               />
@@ -88,7 +202,7 @@ function App() {
                   <BootDetailseite
                     boote={boote}
                     fetchBoote={fetchBoote}
-                    fetchReservierungen={fetchReservierungen}
+                    fetchReservierungen={fetchPopulatedReservations}
                   />
                 }
               />
@@ -96,7 +210,7 @@ function App() {
           </div>
         </div>
       </BrowserRouter>
-    </>
+    </ReservierungenContext.Provider>
   );
 }
 

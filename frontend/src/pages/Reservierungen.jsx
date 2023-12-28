@@ -1,26 +1,23 @@
-import { useState } from 'react';
 import Liste from '../components/Liste';
 import AddRes from '../components/Reservierungen/AddRes';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { ReservierungenContext } from '../context/ReservierungenContext.jsx';
 
-function Reservierungen({ reservierungen, fetchReservierungen, setAddMode }) {
-  // const [addMode, setAddMode] = useState(false);
-
+function Reservierungen() {
+  const { populatedReservations } = useContext(ReservierungenContext);
+  const [addMode, setAddMode] = useState(false);
   return (
     <main className='reservierungen'>
       <h1>Reservierungen</h1>
-
-      <button onClick={() => setAddMode(true)}>
-        Neue Reservierung anlegen
-      </button>
-      {/*
       {addMode ? (
-        <AddRes
+        <AddRes setAddMode={setAddMode} />
+      ) : (
+        <Liste
+          page='res'
           setAddMode={setAddMode}
-          fetchReservierungen={fetchReservierungen}
+          reservierungen={populatedReservations}
         />
-      ) : ( */}
-      <Liste page='res' reservierungen={reservierungen} />
-      {/* )} */}
+      )}
     </main>
   );
 }

@@ -1,8 +1,8 @@
 import BootItem from './Boote/BootItem';
 import ResItem from './Reservierungen/ResItem';
+import { useState } from 'react';
 
 function Liste({ page, boote, reservierungen, setAddMode }) {
-  // denn addMode State habe ich schon in die App verlegt
   return (
     <section className='list'>
       {page === 'boote' && (
@@ -20,9 +20,9 @@ function Liste({ page, boote, reservierungen, setAddMode }) {
       )}
       {page === 'res' && (
         <article>
-          {/* <button onClick={() => setAddMode(true)}>
+          <button onClick={() => setAddMode(true)}>
             Neue Reservierung anlegen
-          </button> */}
+          </button>
           {reservierungen?.map((res, index) => (
             <div
               key={res._id}
