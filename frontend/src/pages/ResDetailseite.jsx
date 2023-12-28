@@ -9,72 +9,32 @@ function ResDetailseite({ boote, fetchBoote, setAddMode, addMode }) {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // const [resData, setResData] = useState([]); // populated Reservierung
-  // const [bootData, setBootData] = useState(); //
   const [deleted, setDeleted] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
   console.log({ editMode });
 
   const reservierung = populatedReservations?.find((item) => item._id === id);
   const bootID = reservierung?.boot; // ref aus der reservierung
-  // const boot = boote?.find((item) => item._id === bootID); // sucht nochmal die id aus der boote collection weil die daten aus der pop. res nicht da waren (brauche ich das noch?)
-  // console.log({ boot });
 
-  // console.log({ reservierungen });
-  // console.log({ bootID });
-  // console.log({ resData });
-  // console.log({ bootData });
   console.log({ reservierung });
-  // console.log('????? Sind Boot Daten da?: ', resData?.boot);
-
-  // useEffect(() => {
-  //   fetchResDetails();
-  // }, [populatedReservations, boote]);
-
-  // useEffect(() => {
-  //   console.log('resData.boot:', resData.boot);
-  //   setBootData(resData?.boot);
-  // }, [resData]);
   console.log('reservierung.boot:', reservierung?.boot);
 
   const handleDeleteRes = () => {
+    setConfirm(true);
+  };
+
+  const handleConfirmDeleteRes = () => {
     deleteReservierung();
     setTimeout(() => {
       navigate('/reservierungen');
     }, 2000);
   };
 
-  //! ----- fetchResDetails --------------------
-  //# den fetch brauche ich gar nicht mehr weil ich jetzt alle schon aus dem context habe und einfach die boot details da raus holen kann
-
-  // async function fetchResDetails() {
-  //   try {
-  //     const res = await fetch(
-  //       `${import.meta.env.VITE_BACKENDURL}/api/reservations/details`,
-  //       {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           boot: bootID,
-  //         }),
-  //       }
-  //     );
-  //     if (res.ok) {
-  //       const data = await res.json();
-  //       console.log({ data });
-  //       //# das Problem ist der response ist immer erst null (warum trotz await???)
-  //       //# aber wenn die Daten dann da sind wird setResData nicht mehr ausgeführt, weil der Wert ja schon auf null gesetzt wurde!
-  //       if (data !== null) {
-  //         setResData(data);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log('Fehler beim fetch der Reservierungsdetails', error);
-  //   }
-  // }
+  const handleCancelDeleteRes = () => {
+    setConfirm(false);
+  };
 
   //! ----- deleteReservierung --------------------
 
@@ -103,13 +63,14 @@ function ResDetailseite({ boote, fetchBoote, setAddMode, addMode }) {
   }
 
   return (
-    <>
+    <main className='res-details'>
+      <h1>Reservierungsdetails</h1>
       <section>
         {!deleted ? (
-          <div>
+          <div className='details'>
             <h2>Reservierungsnummer: {reservierung?._id.slice(-5)}</h2>
-            <p></p>
-            <p>
+
+            <p className='datum'>
               {new Date(reservierung?.startdatum)
                 .toLocaleDateString()
                 .split('.')
@@ -122,22 +83,47 @@ function ResDetailseite({ boote, fetchBoote, setAddMode, addMode }) {
                 .map((part) => part.padStart(2, '0'))
                 .join('.')}{' '}
             </p>
-            {reservierung ? (
+
+            {/* {reservierung ? ( */}
+            {!editMode && (
               <div>
                 <h3>Info zum reservierten Boot:</h3>
-                <p>Name: {reservierung?.boot.name}</p>
-                <p>Seriennummer: {reservierung?.boot.seriennummer}</p>
-                <p>Baujahr: {reservierung?.boot.baujahr}</p>
-                <p>Material: {reservierung?.boot.material}</p>
-                <p>Art: {reservierung?.boot.bootsart}</p>
-                <p>Farbe: {reservierung?.boot.farbe}</p>
-                <p>Passagiere: {reservierung?.boot.passagierzahl}</p>
-              </div>
-            ) : (
-              <div>
-                <p>Daten werden geladen ...</p>
+                <div className='info-flex'>
+                  <div>
+                    <p>
+                      Name: <span>{reservierung?.boot.name}</span>
+                    </p>
+                    <p>
+                      Serien-Nr.: <span>{reservierung?.boot.seriennummer}</span>
+                    </p>
+                    <p>
+                      Passagiere:{' '}
+                      <span>{reservierung?.boot.passagierzahl}</span>
+                    </p>
+                    <p>
+                      Baujahr: <span>{reservierung?.boot.baujahr}</span>
+                    </p>
+                  </div>
+                  <div>
+                    <p>
+                      Art: <span>{reservierung?.boot.bootsart}</span>
+                    </p>
+                    <p>
+                      Material: <span>{reservierung?.boot.material}</span>
+                    </p>
+                    <p>
+                      Farbe: <span>{reservierung?.boot.farbe}</span>
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
+
+            {/*  ) : ( */}
+            {/*  <div> */}
+            {/*  <p>Daten werden geladen ...</p> */}
+            {/*  </div> */}
+            {/*  )} */}
           </div>
         ) : (
           <div>
@@ -145,16 +131,35 @@ function ResDetailseite({ boote, fetchBoote, setAddMode, addMode }) {
             <p>Du wirst jetzt weitergeleitet...</p>
           </div>
         )}
-        <button className='edit-res' onClick={() => setEditMode(true)}>
-          Reservierung bearbeiten
-        </button>
-        <button className='del-res' onClick={handleDeleteRes}>
-          Reservierung löschen
-        </button>
-      </section>
+        {!editMode && (
+          <div>
+            <button className='btn-edit' onClick={() => setEditMode(true)}>
+              Reservierung bearbeiten
+            </button>
+            <button className='btn-del' onClick={handleDeleteRes}>
+              Reservierung löschen
+            </button>
+          </div>
+        )}
 
+        {confirm && (
+          <div className='warn'>
+            <p>ACHTUNG!</p>
+            <p>
+              Möchtest du diese Reservierung wirklich aus der Datenbank löschen?
+            </p>
+
+            <button className='btn-conf' onClick={handleConfirmDeleteRes}>
+              Ja
+            </button>
+            <button className='btn-cancel' onClick={handleCancelDeleteRes}>
+              Nein
+            </button>
+          </div>
+        )}
+      </section>
       {editMode && <EditRes setEditMode={setEditMode} />}
-    </>
+    </main>
   );
 }
 

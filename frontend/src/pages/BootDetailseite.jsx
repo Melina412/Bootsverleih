@@ -11,6 +11,7 @@ function BootDetailseite({
   const navigate = useNavigate();
 
   const [deleted, setDeleted] = useState(false);
+  const [confirm, setConfirm] = useState(false);
 
   const boot = boote?.find((item) => item._id === id);
   console.log({ boot });
@@ -38,34 +39,68 @@ function BootDetailseite({
   }
 
   const handleDeleteBoot = () => {
+    setConfirm(true);
+  };
+
+  const handleConfirmDeleteBoot = () => {
     deleteBoot();
     setTimeout(() => {
       navigate('/boote');
     }, 2000);
   };
 
+  const handleCancelDeleteBoot = () => {
+    setConfirm(false);
+  };
+
   return (
-    <section>
-      {!deleted ? (
-        <div>
-          <h1>{boot?.name}</h1>
-          <h2>{boot?.seriennummer}</h2>
-          <p>Art: {boot?.bootsart}</p>
-          <p>Baujahr: {boot?.baujahr}</p>
-          <p>Material: {boot?.material}</p>
-          <p>Farbe: {boot?.farbe}</p>
-          <p>Passagierzahl: {boot?.passagierzahl}</p>
-        </div>
-      ) : (
-        <div>
-          <p>Boot wurde gelöscht!</p>
-          <p>du wirst jetzt weitergeleitet...</p>
-        </div>
-      )}
-      <button className='del-res' onClick={handleDeleteBoot}>
-        Boot löschen
-      </button>
-    </section>
+    <main className='boot-details'>
+      <h1>Bootdetails</h1>
+      <section>
+        {!deleted ? (
+          <div className='details'>
+            <h2>{boot?.name}</h2>
+            <h3>{boot?.seriennummer}</h3>
+            <p>
+              Art: <span> {boot?.bootsart}</span>{' '}
+            </p>
+            <p>
+              Baujahr: <span> {boot?.baujahr}</span>{' '}
+            </p>
+            <p>
+              Material: <span> {boot?.material}</span>{' '}
+            </p>
+            <p>
+              Farbe: <span> {boot?.farbe}</span>{' '}
+            </p>
+            <p>
+              Passagierzahl: <span> {boot?.passagierzahl}</span>{' '}
+            </p>
+          </div>
+        ) : (
+          <div>
+            <p>Boot wurde gelöscht!</p>
+            <p>du wirst jetzt weitergeleitet...</p>
+          </div>
+        )}
+        <button className='btn-del' onClick={handleDeleteBoot}>
+          Boot löschen
+        </button>
+        {confirm && (
+          <div className='warn'>
+            <p>ACHTUNG!</p>
+            <p>Möchtest du dieses Boot wirklich aus der Datenbank löschen?</p>
+
+            <button className='btn-conf' onClick={handleConfirmDeleteBoot}>
+              Ja
+            </button>
+            <button className='btn-cancel' onClick={handleCancelDeleteBoot}>
+              Nein
+            </button>
+          </div>
+        )}
+      </section>
+    </main>
   );
 }
 

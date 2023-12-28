@@ -14,20 +14,16 @@ function ResItem({ res }) {
     .join('.');
 
   return (
-    <Link
-      to={{
-        pathname: `/details/reservierungen/${res._id}`,
-        state: { itemType: 'res' },
-      }}
-      title="hier geht's zur Reservierungen-Detailseite"
-      onClick={() => sessionStorage.setItem('itemType', 'res')}
-    >
-      {/* <div className='res-list-items'> */}
-      <p className='res-item'>Res.-Nr: {res._id.slice(-5)}</p>
-      <p className='res-item'>{res.boot.name}</p>
-      <p className='res-item'>{start_date + ' - ' + end_date}</p>
-      {/* </div> */}
-    </Link>
+    <div className='list-item'>
+      <Link
+        to={`/details/reservierungen/${res._id}`}
+        title='Details der Reservierung'
+      >
+        <p className='res-item'>Res.-Nr: {res._id.slice(-5)}</p>
+        <p className='res-item'>{res.boot.name}</p>
+        <p className='res-item'>{start_date + ' - ' + end_date}</p>
+      </Link>
+    </div>
   );
 }
 

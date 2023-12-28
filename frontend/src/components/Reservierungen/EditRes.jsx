@@ -19,21 +19,23 @@ function EditRes({ setEditMode }) {
   const handleEdit = () => {};
 
   return (
-    <section>
-      <h2>Reservierung bearbeiten:</h2>
+    <section className='edit-res add'>
+      <h2 className='h2-edit'>Reservierung bearbeiten:</h2>
       <form>
-        <div>
+        <div className='edit-input'>
           <label htmlFor='startdatum'>Neues Startdatum</label>
           <input
+            required
             type='date'
             name='startdatum'
             min={new Date().toISOString().split('T')[0]}
             onChange={(e) => setResStart(new Date(e.target.value).getTime())}
           />
         </div>
-        <div>
+        <div className='edit-input'>
           <label htmlFor='enddatum'>Neues Enddatum</label>
           <input
+            required
             type='date'
             name='enddatum'
             min={minDate}
@@ -41,7 +43,7 @@ function EditRes({ setEditMode }) {
           />
         </div>
         {resStart && resEnd ? (
-          <div>
+          <div className='edit-input'>
             <label htmlFor='boot'>Welches Boot</label>
             <select name='boot'>
               {selectOptions?.map((option, key) => (
@@ -53,18 +55,24 @@ function EditRes({ setEditMode }) {
           </div>
         ) : (
           <div>
-            <p>
+            <p className='edit-text'>
               Bitte zuerst ein neues Datum auswählen. Die verfügbaren Boote für
               diesen Zeitraum werden dann angezeigt.
             </p>
           </div>
         )}
 
-        <button type='submit' onClick={handleEdit}>
+        <button
+          className='btn-submit btn-submit-edit'
+          type='submit'
+          onClick={handleEdit}
+        >
           Änderungen speichern
         </button>
       </form>
-      <button onClick={() => setEditMode(false)}>Abbrechen</button>
+      <button className='btn-cancel' onClick={() => setEditMode(false)}>
+        Abbrechen
+      </button>
     </section>
   );
 }

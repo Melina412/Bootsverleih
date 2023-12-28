@@ -30,10 +30,13 @@ $pink: #ffafcc;
 $sky: #bde0fe;
 $blue: #a2d2ff;
 
+$blue2: rgb(99, 180, 255);
+$pink2: rgb(255, 137, 180);
+
 // * general style ***************************************************
 
 :root {
-  // background-color: $purple;
+  // background-color: $purple;‚
   background-color: rgb(67, 67, 171);
 }
 
@@ -45,11 +48,6 @@ $blue: #a2d2ff;
 
 html {
   font-size: 62.5%;
-}
-
-//# wieder löschen dann !
-body {
-  margin: 10rem;
 }
 
 // * mixins ***************************************************
@@ -65,104 +63,334 @@ body {
   height: $h;
 }
 
-// * element style ************************************
+// * element style ************************************************************
 
 h1 {
-  font-size: 5rem;
+  @include text-style($Roboto900, 5rem, black);
 }
 
 h2 {
-  font-size: 3rem;
+  @include text-style($Roboto700, 3.5rem, black);
 }
 
 h3 {
-  font-size: 2.8rem;
+  @include text-style($Roboto500, 2.8rem, black);
 }
 
 p {
-  font-size: 2.4rem;
+  @include text-style($Roboto300, 2.4rem, black);
 }
+
+button {
+  @include text-style($Roboto500, 2rem, black);
+  padding: 0.2rem 2rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &.btn-add,
+  &.btn-edit {
+    background-color: $purple;
+  }
+
+  &.btn-submit {
+    background-color: $sky;
+  }
+
+  &.btn-cancel {
+    background-color: $pink;
+  }
+
+  &.btn-del {
+    background-color: $purple;
+
+    &:hover {
+      background-color: deeppink;
+    }
+  }
+  &.btn-conf {
+    background-color: deeppink;
+  }
+
+  &:hover {
+    background-color: #3e47a880;
+  }
+}
+
+// * app & pages style ********************************************************
 
 div.app-flex {
   display: flex;
   gap: 5rem;
+  padding: 15rem 10rem;
+  background-color: $purple;
+  height: 100vh;
+  width: 100vw;
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 1px solid black;
+    padding: 0 0.5rem;
+
+    img {
+      width: 3rem;
+    }
+  }
 }
 
-main {
-  &.dash {
-    section {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+div.app-content {
+  width: 100%;
 
-      article {
+  main {
+    margin: 1rem 0;
+
+    h1 {
+      margin-bottom: 3rem;
+    }
+
+    // Dashboard
+    &.dash {
+      background-color: $purple;
+
+      h1 {
+        text-align: center;
+      }
+
+      section {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+
+        article {
+          border: 1px solid black;
+          height: 15rem;
+          display: grid;
+          gap: 2rem;
+          justify-items: center;
+          align-items: center;
+          padding: 1rem;
+
+          h3 {
+            text-align: center;
+          }
+          p {
+            @include text-style($Roboto700, 4rem, black);
+          }
+        }
+      }
+    }
+
+    // Detailseiten
+    &.boot-details,
+    &.res-details {
+      section {
+        div.details {
+          margin-bottom: 2rem;
+          h3 {
+            margin-bottom: 2rem;
+            font-size: 3.4rem;
+          }
+
+          p {
+            @include text-style($Roboto300, 2.4rem, black);
+            line-height: 1.5;
+
+            span {
+              @include text-style($Roboto500, 2.6rem, black);
+            }
+
+            &.datum {
+              @include text-style($Roboto500, 2.6rem, black);
+              margin-bottom: 3rem;
+            }
+          }
+
+          div.info-flex {
+            display: flex;
+            gap: 10rem;
+          }
+        }
+        div.warn {
+          p {
+            &:first-of-type {
+              @include text-style($Roboto500, 3rem, white);
+              background-color: deeppink;
+              border-radius: 5px;
+              letter-spacing: 5px;
+              text-align: center;
+              width: 25rem;
+              padding: 0.5rem 2rem;
+              margin: 2rem 0;
+            }
+
+            &:last-of-type {
+              @include text-style($Roboto500, 2rem, black);
+              margin-bottom: 2rem;
+            }
+          }
+
+          button {
+            width: 10rem;
+            margin-right: 1rem;
+          }
+        }
+      }
+      button.btn-edit {
+        margin-right: 1rem;
+      }
+    }
+    // section.edit-res weiter unten bei section.add-res
+  }
+}
+
+// * list component style *****************************************************
+
+section.list {
+  article {
+    button.btn-add {
+      margin-bottom: 5rem;
+    }
+
+    div {
+      &#res-even-odd {
+        a {
+          display: flex;
+          gap: 2rem;
+          justify-content: space-between;
+        }
+      }
+      &.even-boat {
+        // background-color: $sky;
+        background-color: $sky;
         border: 1px solid black;
+      }
+      &.odd-boat {
+        background-color: $blue;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+      }
+      &.even-res {
+        background-color: $rose;
+        border: 1px solid black;
+      }
+      &.odd-res {
+        background-color: $pink;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+      }
+    }
+
+    div.list-item {
+      a {
+        // width: 100%;
+        display: grid;
+        grid-template-columns: 32% 23% 35%;
+        gap: 5%;
+        justify-content: space-between;
+        align-items: center;
+        color: black;
+        text-decoration: none;
+      }
+
+      p.boot-item,
+      p.res-item {
+        padding: 0.5rem 2rem;
+        text-wrap: nowrap;
+      }
+      p.s-nr {
+        font-size: 1.8rem;
       }
     }
   }
 }
 
-nav {
-  height: 50rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  border: 1px solid black;
+// * add boot / add reservierung component style ************************************
 
-  img {
-    width: 3rem;
+section.add {
+  h3 {
+    margin-bottom: 2rem;
   }
-}
-a {
-  text-decoration: none;
-  color: black;
-}
+  form {
+    input:invalid + span::after {
+      content: '✖';
+      padding-left: 5px;
+    }
 
-p.boot-item,
-p.res-item {
-  padding: 0.5rem 2rem;
-}
-div.even-boat {
-  background-color: $sky;
-}
-div.odd-boat {
-  background-color: $blue;
-}
-div.even-res {
-  background-color: $rose;
-}
-div.odd-res {
-  background-color: $pink;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-label {
-  font-size: 2rem;
-}
-
-button {
-  margin: 2rem 0;
-}
-
-div#even-odd {
-  a {
-    display: flex;
-    gap: 2rem;
-    justify-content: space-between;
+    input:valid + span::after {
+      content: '✓';
+      padding-left: 5px;
+    }
   }
-}
 
-input:invalid + span::after {
-  content: '✖';
-  padding-left: 5px;
-}
+  button {
+    width: 15rem;
+    margin: 1rem 0;
+  }
+  &.add-boot {
+    form {
+      div {
+        display: flex;
+        align-items: center;
+        margin: 1rem 0;
+        input {
+          width: 30rem;
+          font-size: 2rem;
+        }
+      }
+    }
+  }
 
-input:valid + span::after {
-  content: '✓';
-  padding-left: 5px;
+  &.add-res,
+  &.edit-res {
+    h2.h2-edit {
+      margin: 2rem 0;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+
+      div.input-flex {
+        display: flex;
+        gap: 2rem;
+        justify-content: space-between;
+        align-items: center;
+        margin: 2rem 0;
+
+        input,
+        select {
+          font-size: 1.8rem;
+        }
+      }
+
+      div.edit-input {
+        label {
+          margin-right: 1rem;
+        }
+      }
+
+      label {
+        @include text-style($Roboto500, 2rem, black);
+      }
+
+      p.edit-text {
+        @include text-style($Roboto300, 1.8rem, black);
+      }
+      button {
+        margin: 2rem 0;
+
+        &.btn-submit-edit {
+          width: 25rem;
+        }
+      }
+    }
+  }
+
+  // button.btn-cancel {
+  //   width: 15rem;
+  // }
 }

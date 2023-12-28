@@ -7,10 +7,13 @@ function Liste({ page, boote, reservierungen, setAddMode }) {
     <section className='list'>
       {page === 'boote' && (
         <article>
-          <button onClick={() => setAddMode(true)}>Neues Boot anlegen</button>
+          <button className='btn-add' onClick={() => setAddMode(true)}>
+            Neues Boot anlegen
+          </button>
           {boote?.map((boot, index) => (
             <div
               key={boot._id}
+              id='boot-even-odd'
               className={index % 2 === 0 ? 'even-boat' : 'odd-boat'}
             >
               <BootItem boot={boot} boote={boote} />
@@ -20,13 +23,13 @@ function Liste({ page, boote, reservierungen, setAddMode }) {
       )}
       {page === 'res' && (
         <article>
-          <button onClick={() => setAddMode(true)}>
+          <button className='btn-add' onClick={() => setAddMode(true)}>
             Neue Reservierung anlegen
           </button>
           {reservierungen?.map((res, index) => (
             <div
               key={res._id}
-              id='even-odd'
+              id='res-even-odd'
               className={index % 2 === 0 ? 'even-res' : 'odd-res'}
             >
               <ResItem res={res} reservierungen={reservierungen} />

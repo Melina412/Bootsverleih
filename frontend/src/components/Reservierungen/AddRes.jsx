@@ -61,30 +61,40 @@ function AddRes({ setAddMode, fetchReservierungen }) {
   return (
     <>
       {!added ? (
-        <section>
+        <section className='add-res add'>
           <form onSubmit={addRes}>
-            <div>
+            <div className='input-flex'>
               <label htmlFor='startdatum'>Startdatum</label>
-              <input
-                type='date'
-                name='startdatum'
-                min={new Date().toISOString().split('T')[0]}
-                onChange={(e) =>
-                  setResStart(new Date(e.target.value).getTime())
-                }
-              />
+              <div>
+                <input
+                  required
+                  type='date'
+                  name='startdatum'
+                  min={new Date().toISOString().split('T')[0]}
+                  onChange={(e) =>
+                    setResStart(new Date(e.target.value).getTime())
+                  }
+                />
+                <span className='input-feedback'></span>
+              </div>
             </div>
-            <div>
+            <div className='input-flex'>
               <label htmlFor='enddatum'>Enddatum</label>
-              <input
-                type='date'
-                name='enddatum'
-                min={minDate}
-                onChange={(e) => setResEnd(new Date(e.target.value).getTime())}
-              />
+              <div>
+                <input
+                  required
+                  type='date'
+                  name='enddatum'
+                  min={minDate}
+                  onChange={(e) =>
+                    setResEnd(new Date(e.target.value).getTime())
+                  }
+                />
+                <span className='input-feedback'></span>
+              </div>
             </div>
             {resStart && resEnd ? (
-              <div>
+              <div className='input-flex'>
                 <label htmlFor='boot'>Welches Boot</label>
                 <select name='boot'>
                   {selectOptions?.map((option, key) => (
@@ -103,13 +113,21 @@ function AddRes({ setAddMode, fetchReservierungen }) {
               </div>
             )}
 
-            <button type='submit'>Submit</button>
+            <button className='btn-submit' type='submit'>
+              Speichern
+            </button>
           </form>
-          <button onClick={() => setAddMode(false)}>Abbrechen</button>
+          <button
+            className='btn-cancel
+          '
+            onClick={() => setAddMode(false)}
+          >
+            Abbrechen
+          </button>
         </section>
       ) : (
         <div>
-          <p>Reservierung wurde erstellt!</p>
+          <p>Reservierung wurde erstellt und gespeichert!</p>
           <p>Du wirst zu den Reservierungen weitergeleitet...</p>
         </div>
       )}

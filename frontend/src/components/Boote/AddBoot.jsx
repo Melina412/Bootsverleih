@@ -28,32 +28,85 @@ function AddBoot({ setAddMode, fetchBoote }) {
   return (
     <>
       {!added ? (
-        <section>
+        <section className='add-boot add'>
+          <h3>Hier kannst du die Daten für das neue Boot eingeben: </h3>
           <form onSubmit={addBoot}>
-            <input type='text' name='name' placeholder='Name' />
-            <input type='number' name='baujahr' placeholder='Baujahr' />
-            <input type='text' name='seriennummer' placeholder='Seriennummer' />
-            <input type='text' name='material' placeholder='Material' />
-            <input type='text' name='bootsart' placeholder='Bootsart' />
-            <input type='text' name='farbe' placeholder='Farbe' />
-            <input
-              type='number'
-              name='passagierzahl'
-              placeholder='Passagierzahl'
-            />
+            <div>
+              <input required type='text' name='name' placeholder='Name' />
+              <span className='input-feedback'></span>
+            </div>
+
+            <div>
+              <input
+                required
+                type='number'
+                name='baujahr'
+                placeholder='Baujahr'
+              />
+              <span className='input-feedback'></span>
+            </div>
+
+            <div>
+              <input
+                required
+                type='text'
+                name='seriennummer'
+                placeholder='Seriennummer'
+              />
+              <span className='input-feedback'></span>
+            </div>
+
+            <div>
+              <input
+                required
+                type='text'
+                name='material'
+                placeholder='Material'
+              />
+              <span className='input-feedback'></span>
+            </div>
+
+            <div>
+              <input
+                required
+                type='text'
+                name='bootsart'
+                placeholder='Bootsart'
+              />
+              <span className='input-feedback'></span>
+            </div>
+
+            <div>
+              <input required type='text' name='farbe' placeholder='Farbe' />
+              <span className='input-feedback'></span>
+            </div>
+
+            <div>
+              <input
+                required
+                type='number'
+                name='passagierzahl'
+                placeholder='Passagierzahl'
+              />
+              <span className='input-feedback'></span>
+            </div>
 
             {/* <div>
           <label htmlFor='img'>Bild hochladen: </label>
           <input type='file' name='img' />
         </div> */}
-            <button type='submit'>Submit</button>
+            <button className='btn-submit' type='submit'>
+              Speichern
+            </button>
           </form>
 
-          <button onClick={() => setAddMode(false)}>Abbbrechen</button>
+          <button className='btn-cancel' onClick={() => setAddMode(false)}>
+            Abbrechen
+          </button>
         </section>
       ) : (
         <div>
-          <p>Boot wurde erstellt!</p>
+          <p>Boot wurde erstellt und gespeichert!</p>
           <p>Du wirst zu den Booten weitergeleitet...</p>
         </div>
       )}

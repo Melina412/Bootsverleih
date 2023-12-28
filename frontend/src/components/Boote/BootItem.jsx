@@ -2,18 +2,13 @@ import { Link } from 'react-router-dom';
 
 function BootItem({ boot }) {
   return (
-    <Link
-      to={`/details/boote/${boot._id}`}
-      // to={{ pathname: `/details/${boot._id}`, state: { itemType: 'boot' } }}
-      // man kann über den react router link auch einen state weitergeben aber das hat nicht richtig funktioniert, deswegen nutze ich einfach den session storage und das klappt hervorragend
-      title='Boot Detailseite'
-      onClick={() => sessionStorage.setItem('itemType', 'boot')}
-    >
-      <p className='boot-item'>
-        <span>{boot.name}</span>, {boot.bootsart}, Seriennummer:{' '}
-        {boot.seriennummer}
-      </p>
-    </Link>
+    <div className='list-item'>
+      <Link to={`/details/boote/${boot._id}`} title='Boot Details'>
+        <p className='boot-item'>{boot.name}</p>
+        <p className='boot-item'>{boot.bootsart}</p>
+        <p className='boot-item s-nr'>Serien-Nr. {boot.seriennummer}</p>
+      </Link>
+    </div>
   );
 }
 

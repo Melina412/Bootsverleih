@@ -1,6 +1,6 @@
 import './App.scss';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ReservierungenContext } from './context/ReservierungenContext';
 import Nav from './components/Nav';
 import Dashboard from './pages/Dashboard';
@@ -8,6 +8,12 @@ import Boote from './pages/Boote';
 import Reservierungen from './pages/Reservierungen';
 import BootDetailseite from './pages/BootDetailseite';
 import ResDetailseite from './pages/ResDetailseite';
+// import styled from 'styled-components';
+
+// const AppWrapper = styled.div`
+//   background-color: ${(props) => props.backgroundColor || '$purple'};
+// `;
+// das npm paket arbeitet auch mit der location D:
 
 function App() {
   //$ fetch für alle Boote -------------------
@@ -142,6 +148,23 @@ function App() {
   console.log({ resEnd });
   console.log({ selectOptions });
 
+  //$ style -------------------------------------
+
+  // const [background, setBackground] = useState('$purple');
+  // const location = useLocation();
+
+  // useEffect(() => {
+  //   if (
+  //     location.pathname === '/boote' ||
+  //     location.pathname === '/details/boote'
+  //   ) {
+  //     setBackground('$sky');
+  //   }
+  // }, [location.pathname]);
+
+  // die location kann nur im kontext des route genutzt werden. da die app außerhalb des routers ist geht das so nicht.
+  // ich müsste den browserrouter und somit auch dien contectProvider und alle dazugehörigen states & funktionnen in die main.jsx verschieben
+
   //$ -------------------------------------
 
   return (
@@ -162,9 +185,10 @@ function App() {
       }}
     >
       <BrowserRouter>
+        {/* <div className={`app-flex ${background}`}> */}
         <div className='app-flex'>
           <Nav />
-          <div>
+          <div className='app-content'>
             <Routes>
               <Route
                 path='/'
