@@ -1,18 +1,14 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
+import { LoginContext } from '../context/LoginContext';
 
 function Login() {
   const userRef = useRef();
   const passwordRef = useRef();
 
-  const [login, setLogin] = useState(false);
-
   const [loginFailed, setLoginFailed] = useState(false);
-  const [loginData, setLoginData] = useState({
-    email: null,
-    password: null,
-  });
+  const { loginData, setLoginData } = useContext(LoginContext);
+
   console.log('loginData:', loginData.email, loginData.password);
-  console.log({ login });
 
   const handleLogin = () => {
     userLogin();
@@ -32,19 +28,24 @@ function Login() {
         method: 'POST',
         headers: headers,
       });
-      console.log({ res });
+
+      // egal ob ich einen body vom client zum server sende oder nicht
+      // hier oder nach nach res.ok muss ich IMMER das machen:
+      //! const data = await res.json();
+      // weil sonst der res.json({sucess: false, error: '...'}) nicht gelesen werden kann
+
+      const response = await res.json();
       if (res.ok) {
-        setLogin(true);
         setLoginData({
           email: userRef.current.value,
           password: passwordRef.current.value,
         });
-        console.log('Login erfolgreich');
+        console.log('Login erfolgreich:', response.success);
       } else if (res.status === 401) {
         setLoginFailed(true);
         userRef.current.value = '';
         passwordRef.current.value = '';
-        console.error('Fehler beim Login:', res.statusText);
+        console.error('Login nicht erfolgreich:', response.error);
       }
     } catch (error) {
       console.error('Fehler beim Login Request', error);
@@ -55,7 +56,7 @@ function Login() {
     <section className='login'>
       <h1>Login</h1>
 
-      {!login ? (
+      {loginData.email === null ? (
         <article>
           <div>
             <label htmlFor='email'>Username: </label>
@@ -87,7 +88,10 @@ function Login() {
         </article>
       ) : (
         <div>
-          <p>Du bist eingeloggt!</p>
+          <p>Du bist eingeloggt als user {loginData.email}</p>
+          <button onClick={() => setLoginData({ email: null, password: null })}>
+            Logout
+          </button>
         </div>
       )}
     </section>
